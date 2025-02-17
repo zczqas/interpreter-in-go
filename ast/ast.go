@@ -109,3 +109,17 @@ func (es *ExpressionStatement) String() string {
 
 	return ""
 }
+
+type IntegerLiteral struct {
+	Token token.Token
+	Value int64
+}
+
+// expressionNode implements Expression.
+func (li *IntegerLiteral) expressionNode() {
+	panic("unimplemented")
+}
+
+func (li *IntegerLiteral) statementNode()       {}
+func (li *IntegerLiteral) TokenLiteral() string { return li.Token.Literal }
+func (li *IntegerLiteral) String() string       { return li.Token.Literal }
