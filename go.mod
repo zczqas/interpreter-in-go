@@ -1,3 +1,3 @@
 module go_inter
 
-go 1.21.5
+go 1.24.0
