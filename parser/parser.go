@@ -255,6 +255,16 @@ func (p *Parser) parseInfixExpression(left ast.Expression) ast.Expression {
 	p.nextToken()
 	expression.Right = p.parseExpression(precedence)
 
+	// making the `+` precedence of the right associativity
+	// expected="((a + b) + c)", got="(a + (b + c))"
+	// expected="((a + b) - c)", got="(a + (b - c))"
+
+	// if expression.Operator == "+" {
+	// 	expression.Right = p.parseExpression(precedence - 1)
+	// } else {
+	// 	expression.Right = p.parseExpression(precedence)
+	// }
+
 	return expression
 }
 
