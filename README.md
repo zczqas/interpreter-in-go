@@ -25,3 +25,6 @@ To build the project, run:
 
 ```sh
 go build
+```
+
+![Error](error.png)
