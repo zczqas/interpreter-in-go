@@ -3,6 +3,7 @@ package repl
 import (
 	"bufio"
 	"fmt"
+	"go_inter/evaluator"
 	"go_inter/lexer"
 	"go_inter/parser"
 	"io"
@@ -60,8 +61,11 @@ func Start(in io.Reader, out io.Writer) {
 			continue
 		}
 
-		io.WriteString(out, program.String())
-		io.WriteString(out, "\n")
+		evaluated := evaluator.Eval(program)
+		if evaluated != nil {
+			io.WriteString(out, evaluated.Inspect())
+			io.WriteString(out, "\n")
+		}
 	}
 }
 
