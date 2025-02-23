@@ -4,7 +4,6 @@ This project is an interpreter for a simple programming language written in Go. 
 
 ## Project Structure
 
-
 ### Directories
 
 - **ast/**: Contains the Abstract Syntax Tree (AST) definitions and related functions.
