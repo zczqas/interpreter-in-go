@@ -13,9 +13,9 @@ var (
 )
 
 const (
-	IDENTIFIER_NOT_FOUND = "identifier not found"
-	NOT_FUNC_ERROR       = "not a function"
-	UNKNOEN_OPERATOR     = "unknown operator"
+	identifierNotFoundError = "identifier not found"
+	notFunctionError        = "not a function"
+	unknownOperatorError    = "unknown operator"
 )
 
 func Eval(node ast.Node, env *object.Environment) object.Object {
@@ -287,24 +287,28 @@ func evalIdentifier(
 	node *ast.Identifier,
 	env *object.Environment,
 ) object.Object {
-	val, ok := env.Get(node.Value)
-	if !ok {
-		return newError("%s: %s", IDENTIFIER_NOT_FOUND, node.Value)
+	if val, ok := env.Get(node.Value); ok {
+		return val
 	}
 
-	return val
+	if builtin, ok := builtins[node.Value]; ok {
+		return builtin
+	}
+
+	return newError("%s: %s", identifierNotFoundError, node.Value)
 }
 
 func applyFunction(fn object.Object, args []object.Object) object.Object {
-	function, ok := fn.(*object.Function)
-	if !ok {
-		return newError("%s: %s", NOT_FUNC_ERROR, fn.Type())
+	switch fn := fn.(type) {
+	case *object.Function:
+		extendedEnv := extendFunctionEnv(fn, args)
+		evaluated := Eval(fn.Body, extendedEnv)
+		return unwrapReturnValue(evaluated)
+	case *object.Builtin:
+		return fn.Fn(args...)
+	default:
+		return newError("%s: %s", notFunctionError, fn.Type())
 	}
-
-	extendedEnv := extendFunctionEnv(function, args)
-	evaluated := Eval(function.Body, extendedEnv)
-
-	return unwrapReturnValue(evaluated)
 }
 
 func extendFunctionEnv(
@@ -313,8 +317,8 @@ func extendFunctionEnv(
 ) *object.Environment {
 	env := object.NewEnclosedEnvironment(fn.Env)
 
-	for paramdIdx, param := range fn.Parameters {
-		env.Set(param.Value, args[paramdIdx])
+	for paramIdx, param := range fn.Parameters {
+		env.Set(param.Value, args[paramIdx])
 	}
 
 	return env
@@ -333,7 +337,7 @@ func evalStringInfixExpression(
 	left, right object.Object,
 ) object.Object {
 	if operator != "+" {
-		return newError("%s: %s %s %s", UNKNOEN_OPERATOR, left.Type(), operator, right.Type())
+		return newError("%s: %s %s %s", unknownOperatorError, left.Type(), operator, right.Type())
 	}
 
 	leftVal := left.(*object.String).Value

@@ -49,6 +49,10 @@ const (
 	GT = ">"
 
 	STRING = "STRING"
+
+	// Array
+	LBRACKET = "["
+	RBRACKET = "]"
 )
 
 var keywords = map[string]TokenType{
