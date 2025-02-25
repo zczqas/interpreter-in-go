@@ -47,6 +47,8 @@ const (
 
 	LT = "<"
 	GT = ">"
+
+	STRING = "STRING"
 )
 
 var keywords = map[string]TokenType{
