@@ -1,6 +1,9 @@
 # Interpreter in Golang
 
-This project is an interpreter for a simple programming language written in Go. The interpreter supports basic arithmetic operations, variable declarations, and function definitions.
+This project is an interpreter for a simple programming language written in Go. The interpreter supports mathematical expressions, variable
+bindings, functions and the application of those functions, conditionals, return statements and
+even advanced concepts like higher-order functions and closures. And then there are the different
+data types: integers, booleans, strings, arrays and hashes.
 
 ## Project Structure
 
