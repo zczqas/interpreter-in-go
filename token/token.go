@@ -53,6 +53,9 @@ const (
 	// Array
 	LBRACKET = "["
 	RBRACKET = "]"
+
+	// Hash
+	COLON = ":"
 )
 
 var keywords = map[string]TokenType{
