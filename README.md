@@ -10,7 +10,9 @@ data types: integers, booleans, strings, arrays and hashes.
 ### Directories
 
 - **ast/**: Contains the Abstract Syntax Tree (AST) definitions and related functions.
+- **evaluator/**: Contains the evaluator implementation which executes the AST.
 - **lexer/**: Contains the lexer implementation which is responsible for tokenizing the input source code.
+- **object/**: Contains the object system which defines the data types used in the interpreter.
 - **parser/**: Contains the parser implementation which converts tokens into an AST.
 - **repl/**: Contains the Read-Eval-Print Loop (REPL) implementation for interactive use.
 - **token/**: Contains the token definitions used by the lexer and parser.
@@ -28,5 +30,15 @@ To build the project, run:
 ```sh
 go build
 ```
+
+### REPL
+
+To run REPL, run:
+
+```sh
+go run main.go
+```
+
+## Error
 
 ![Error](error.png)
